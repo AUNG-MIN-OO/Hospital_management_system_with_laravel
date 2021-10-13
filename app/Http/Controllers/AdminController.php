@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Doctor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use PhpParser\Comment\Doc;
 
 class AdminController extends Controller
 {
@@ -27,7 +29,7 @@ class AdminController extends Controller
         $doctor->room = $request->room;
 
         $doctor->save();
-        return redirect()->route('add_doctor')->with('message','Doctor is added');
+        return redirect()->route('show-doctor')->with('message','Doctor is added');
 
     }
 
@@ -47,5 +49,40 @@ class AdminController extends Controller
         $appointment = Appointment::findOrFail($id);
         $appointment->delete();
         return redirect()->back()->with("message","Appointment is cancelled");
+    }
+
+    public function showDoctor(){
+        $doctors = Doctor::all();
+        return view('admin.show_doctor',compact('doctors'));
+    }
+
+    public function editDoctor($id){
+        $doctor = Doctor::findOrFail($id);
+        return view('admin.edit_doctor',compact('doctor'));
+    }
+
+    public function updateDoctor(Request $request){
+        $id = $request->id;
+        $doctor = Doctor::findOrFail($id);
+        if ($request->file('image')){
+            $dir = "doctor_image/";
+            $newName = uniqid()."doctor.".$request->file('image')->getClientOriginalExtension();
+            $request->file('image')->move($dir,$newName);
+            File::delete(public_path($dir.$doctor->image));
+            $doctor->image = $newName;
+        }
+        $doctor->name = $request->name;
+        $doctor->phone = $request->phone;
+        $doctor->room = $request->room;
+        $doctor->speciality = $request->speciality;
+        $doctor->update();
+
+        return redirect()->route('show-doctor')->with('message','Doctor info has been updated');
+    }
+
+    public function deleteDoctor($id){
+        $doctor = Doctor::findOrFail($id);
+        $doctor->delete();
+        return redirect()->back()->with('message','Doctor list has been deleted');
     }
 }

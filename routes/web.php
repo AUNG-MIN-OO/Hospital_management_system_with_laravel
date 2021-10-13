@@ -37,6 +37,15 @@ Route::get('/approve/{id}',[\App\Http\Controllers\AdminController::class,'approv
 
 Route::get('/cancel/{id}',[\App\Http\Controllers\AdminController::class,'cancelAppointment']);
 
+Route::get('/show-doctor',[\App\Http\Controllers\AdminController::class,'showDoctor'])->name('show-doctor');
+
+Route::get('/edit-doctor/{id}',[\App\Http\Controllers\AdminController::class,'editDoctor']);
+
+Route::post('/update-doctor',[\App\Http\Controllers\AdminController::class,'updateDoctor']);
+
+Route::get('/delete-doctor/{id}',[\App\Http\Controllers\AdminController::class,'deleteDoctor']);
+
+
 
 
 
