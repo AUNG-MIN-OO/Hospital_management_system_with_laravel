@@ -84,6 +84,9 @@
                     </li>
                     @if(\Illuminate\Support\Facades\Route::has('login'))
                     @auth
+                        <li class="nav-item badge badge-pill badge-success text-white">
+                            <a class="nav-link text-white" href="{{url('/my-appointment')}}">My Appointment</a>
+                        </li>
                         <x-app-layout>
 
                         </x-app-layout>
@@ -102,6 +105,13 @@
         </div> <!-- .container -->
     </nav>
 </header>
+
+@if(session()->has('message'))
+    <div class="alert alert-success mb-2 text-center font-weight-bolder">
+        <button type="button" class="close" data-dismiss="alert">x</button>
+        {{session()->get('message')}}
+    </div>
+@endif
 
 <div class="page-hero bg-image overlay-dark" style="background-image: url(../assets/img/bg_image_1.jpg);">
     <div class="hero-section">
