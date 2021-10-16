@@ -43,6 +43,7 @@
                             <th>Message</th>
                             <th>Status</th>
                             <th>Actions</th>
+                            <th>Send Mail</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -65,6 +66,9 @@
                                         @endif
                                         <a href="{{url('cancel',$data->id)}}" class="btn btn-danger btn-sm">Cancel</a>
                                     </div>
+                                </td>
+                                <td>
+                                    <a href="{{url('email-view',$data->id)}}" class="btn btn-outline-success btn-sm">Send Mail</a>
                                 </td>
                             </tr>
                         @endforeach

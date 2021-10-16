@@ -4,10 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 
 class Appointment extends Model
 {
     use HasFactory;
+
+    use Notifiable;
 
     public function getDoctor(){
         return $this->belongsTo(\App\Models\Doctor::class,'doctor','id');

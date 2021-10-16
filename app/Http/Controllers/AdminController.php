@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use App\Models\Doctor;
+use App\Notifications\SendEmailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Notification;
 use PhpParser\Comment\Doc;
 
 class AdminController extends Controller
@@ -84,5 +86,25 @@ class AdminController extends Controller
         $doctor = Doctor::findOrFail($id);
         $doctor->delete();
         return redirect()->back()->with('message','Doctor list has been deleted');
+    }
+
+    public  function emailView($id){
+        $data = Appointment::find($id);
+        return view('admin.email_view',compact('data'));
+    }
+
+    public function sendEmail(Request $request,$id){
+        $data = Appointment::find($id);
+        $details = [
+            'greeting' => $request->greeting,
+            'body' => $request->body,
+            'action_text' => $request->action_text,
+            'action_url' => $request->action_url,
+            'end_part' => $request->end_part,
+        ];
+
+        Notification::send($data,new SendEmailNotification($details));
+
+        return redirect()->back()->with("message","Email has been sent.");
     }
 }

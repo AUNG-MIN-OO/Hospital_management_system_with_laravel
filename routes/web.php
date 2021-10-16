@@ -33,7 +33,7 @@ Route::post('/cancel-appointment',[\App\Http\Controllers\HomeController::class,'
 
 Route::get('/show-appointment',[\App\Http\Controllers\AdminController::class,'showAppointment']);
 
-Route::get('/approve/{id}',[\App\Http\Controllers\AdminController::class,'approveAppointment']);
+Route::get('/approved/{id}',[\App\Http\Controllers\AdminController::class,'approveAppointment']);
 
 Route::get('/cancel/{id}',[\App\Http\Controllers\AdminController::class,'cancelAppointment']);
 
@@ -44,6 +44,10 @@ Route::get('/edit-doctor/{id}',[\App\Http\Controllers\AdminController::class,'ed
 Route::post('/update-doctor',[\App\Http\Controllers\AdminController::class,'updateDoctor']);
 
 Route::get('/delete-doctor/{id}',[\App\Http\Controllers\AdminController::class,'deleteDoctor']);
+
+Route::get('/email-view/{id}',[\App\Http\Controllers\AdminController::class,'emailView']);
+
+Route::post('/send-mail/{id}',[\App\Http\Controllers\AdminController::class,'sendEmail']);
 
 
 
