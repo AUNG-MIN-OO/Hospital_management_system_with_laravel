@@ -19,7 +19,7 @@ Route::get('/add-doctor-view',[\App\Http\Controllers\AdminController::class,'add
 
 Route::post('/upload_doctor',[\App\Http\Controllers\AdminController::class,'uploadDoctor']);
 
-Route::get('/home',[\App\Http\Controllers\HomeController::class,'redirect']);
+Route::get('/home',[\App\Http\Controllers\HomeController::class,'redirect'])->middleware('auth','verified');
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
